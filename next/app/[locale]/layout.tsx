@@ -12,6 +12,7 @@ import { CartProvider } from '@/context/cart-context';
 import { generateMetadataObject } from '@/lib/shared/metadata';
 import fetchContentType from '@/lib/strapi/fetchContentType';
 import { cn } from '@/lib/utils';
+import { PostHogProvider } from '@/context/posthog-provider';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -56,21 +57,23 @@ export default async function LocaleLayout(props: {
     true
   );
   return (
-    <ViewTransitions>
-      <CartProvider>
-        <div
-          className={cn(
-            inter.className,
-            'bg-charcoal antialiased h-full w-full'
-          )}
-        >
-          <Navbar data={pageData.navbar} locale={locale} />
-          {children}
-          <Footer data={pageData.footer} locale={locale} />
-          <AIToast />
-          {isDraftMode && <DraftModeBanner />}
-        </div>
-      </CartProvider>
-    </ViewTransitions>
+    <PostHogProvider>
+      <ViewTransitions>
+        <CartProvider>
+          <div
+            className={cn(
+              inter.className,
+              'bg-charcoal antialiased h-full w-full'
+            )}
+          >
+            <Navbar data={pageData.navbar} locale={locale} />
+            {children}
+            <Footer data={pageData.footer} locale={locale} />
+            <AIToast />
+            {isDraftMode && <DraftModeBanner />}
+          </div>
+        </CartProvider>
+      </ViewTransitions>
+    </PostHogProvider>
   );
 }
