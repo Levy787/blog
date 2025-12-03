@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  skipTrailingSlashRedirect: true,
   turbopack: {
     root: process.cwd().replace('/next', ''),
   },
